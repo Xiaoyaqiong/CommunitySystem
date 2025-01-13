@@ -37,7 +37,7 @@
             label-width="80px"
           >
             <el-form-item label="用户名">
-              {{ form.userName }}
+              {{ username }}
             </el-form-item>
             <el-form-item label="性别">
               <el-radio-group v-model="form.gender">
@@ -104,7 +104,6 @@ const username = userStore.personInfo.userName;
 const buildingNumber = userStore.personInfo.buildingNumber;
 const unitNumber = userStore.personInfo.unitNumber;
 const doorNumber = userStore.personInfo.doorNumber;
-
 // 表单校验规则
 const ruleUserInfo: FormRules = getUserInfoForm();
 // 表单校验结果
@@ -138,7 +137,7 @@ const changeUserInfo = async (formEl: FormInstance) => {
           buildingNumber: form.buildingNumber,
           doorNumber: form.doorNumber,
           phoneNumber: form.phone,
-          userName: form.userName,
+          idCard: form.idCard,
           email: form.email,
           id: userStore.personInfo.id,
         },

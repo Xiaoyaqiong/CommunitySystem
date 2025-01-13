@@ -131,6 +131,8 @@ router.beforeEach(async(to, from, next) => {
       if (!(to.meta.permiss.includes(userRole))) {
         next('/403');
       } else { 
+        const permissStore=usePermissStore()
+        permissStore.getCurrentPermiss()
         next();
       }
     } else {

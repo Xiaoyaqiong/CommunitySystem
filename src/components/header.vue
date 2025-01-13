@@ -27,6 +27,7 @@
 <script lang="ts" setup>
 import router from "@/router";
 import { usesideBarStore } from "@/stores/sideBar";
+import { useTagStore } from "@/stores/tag";
 import { useUserStore } from "@/stores/userdata";
 
 const sideBarStore = usesideBarStore();
@@ -36,11 +37,13 @@ const handleSideBar = () => {
 const userStore = useUserStore();
 const userName = userStore.personInfo.userName;
 
+const tagStore = useTagStore();
 const handleCommand = (command) => {
   if (command == "user") {
     router.push("/user");
   } else if (command == "logout") {
     userStore.delData();
+    tagStore.delAllTags();
     localStorage.clear();
     router.push("/login");
   }

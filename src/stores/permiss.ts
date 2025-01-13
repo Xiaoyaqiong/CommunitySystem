@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 import { useUserStore } from "./userdata";
 import service from "@/utils/request";
+import { ElMessage } from "element-plus";
 
 export const usePermissStore = defineStore('permiss', () => {
-    const currentPermiss = reactive({arr:[]})
+    const currentPermiss = ref([])
     const roles =reactive( {
         admin: [],
         user:[]
@@ -34,9 +35,27 @@ export const usePermissStore = defineStore('permiss', () => {
                  newList
              }
          }
-        )
-        console.log(res.data,'123')
+      )
+      if (res.code == 200) {
+        ElMessage.success(res.msg)
+        setTimeout(() => {
+          history.go(0)
+        }, 800)
+      } else { 
+        ElMessage.error(res.msg)
+      }
+  }
+  async function getCurrentPermiss() {
+    const userStore = useUserStore()
+    const res = await service({
+      url: '/permission/getpermissionByID',
+      method: 'POST',
+      data: {
+        id:userStore.personInfo.id
+      }
+    })
+    currentPermiss.value = res.data[0].permission.split(",")
     }
-    return {getAllPermission,currentPermiss,roles,updatePermiss}
+    return {getAllPermission,currentPermiss,roles,updatePermiss,getCurrentPermiss}
 },
 )
